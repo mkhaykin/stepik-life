@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block header %}
+<h1>Hi. It`s my test project.</h1>
+{% endblock %}
+
+{% block content %}
+<div id="content-table">
+    <br>
+    <p>Current step: <strong id="step_count"> ... </strong></p>
+    <table id="life_table">
+    </table>
+    <br>
+</div>
+<div id="content-settings" hidden>
+    <p>Настройки:</p>
+    <datalist id="rangeList">
+        <option value="5" label="5">
+        <option value="10" label="10">
+        <option value="15" label="15">
+        <option value="20" label="20">
+        <option value="25" label="20">
+        <option value="30" label="20">
+    </datalist>
+    <table id="settings_table">
+        <tr>
+            <td><label for="size_h">Высота:</label></td>
+            <td align="center" colspan="2"> 5 <input id="size_h" name="nsize_h" list="rangeList" type="range"
+                   step="1" min="5" max="30" value="25"
+                   onchange="document.getElementById('rangeValue_h').innerHTML = this.value;"> 30 </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td align="center" colspan="2"><span id="rangeValue_h"> ... </span></td>
+        </tr>
+        <tr>
+            <td><label for="size_w">Ширина: </label></td>
+            <td align="center" colspan="2"> 5 <input id="size_w" name="size_w" list="rangeList" type="range"
+                       step="1" min="5" max="30" value="25"
+                       onchange="document.getElementById('rangeValue_w').innerHTML = this.value;"> 30 </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td align="center" colspan="2"><span id="rangeValue_w"> ... </span></td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td></td>
+            <td><button id="btn_apply" type="button" class="btn" onclick="SetApply()">Применить</button></td>
+            <td><button id="btn_back" type="button" class="btn" onclick="SetBack()">Назад</button></td>
+        </tr>
+    </table>
+</div>
+{% endblock %}
+
+{% block nav %}
+<p align="center"><h2 align="center">Select an action.</h2>
+<form action="" method="post" align="center" >
+    <p><button id="btn_new" type="button" class="btn" onclick="New()">new world</button></p>
+    <p><button id="btn_next" type="button" class="btn" onclick="Next()">next step</button></p>
+    <p><button id="btn_auto" type="button" class="btn" onclick="Auto()">start auto</button></p>
+    <br>
+    <p><button id="btn_settings" type="button" class="btn" onclick="Settings()">settings</button></p>
+    <br>
+    <p><button id="btn_new_refresh" type="refresh" class="btn">refresh</button></p>
+</form>
+{% endblock %}
+
+{% block extra %}
+<p><strong>Rules:</strong> sorry. not yet ... </p>
+<p>press "new world" to build new world.</p>
+{% endblock %}

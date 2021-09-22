@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" lang="en">
+    <title>Game of Life</title>
+	<link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+	<div id="container">
+		<div id="header">
+			{% block header %}
+    		{% endblock %}
+		</div>
+		<div id="wrapper">
+			<div id="content">
+			{% block content %}
+    		{% endblock %}
+			</div>
+		</div>
+		<div id="navigation">
+			{% block nav %}
+    		{% endblock %}
+		</div>
+		<div id="extra">
+			{% block extra %}
+    		{% endblock %}
+		</div>
+		<div id="footer">
+			{% block footer %}
+			<p>Copyright etc ...</p>
+    		{% endblock %}
+		</div>
+	</div>
+	<script>
+    {% block scripts %}
+    {% endblock %}
+    </script>
+	<script type="text/javascript" src="/static/script.js"></script>
+</body>
+</html>

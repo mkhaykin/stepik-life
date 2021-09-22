@@ -1,0 +1,140 @@
+.cell {
+    padding: 5px;
+    background: whitesmoke;
+    width: 5px;
+    height: 5px;
+}
+
+.living-cell {
+    background: lightgreen;
+}
+
+.dead-cell {
+    background: #A6ACAF;
+}
+
+#world {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.btn {
+  display: inline-block;
+  width: 15em;
+  font-size: 80%;
+  color: rgba(255,255,255,.9);
+  text-shadow: #2e7ebd 0 1px 2px;
+  text-decoration: none;
+  text-align: center;
+  line-height: 1.1;
+  white-space: pre-line;
+  padding: .7em 0;
+  border: 1px solid;
+  border-color: #60a3d8 #2970a9 #2970a9 #60a3d8;
+  border-radius: 6px;
+  outline: none;
+  background: #60a3d8 linear-gradient(#89bbe2, #60a3d8 50%, #378bce);
+  box-shadow: inset rgba(255,255,255,.5) 1px 1px;
+}
+.btn:first-line{
+  font-size: 170%;
+  font-weight: 700;
+}
+.btn:hover {
+  color: rgb(255,255,255);
+  background-image: linear-gradient(#9dc7e7, #74afdd 50%, #378bce);
+}
+.btn:active {
+  color: rgb(255,255,255);
+  border-color: #2970a9;
+  background-image: linear-gradient(#5796c8, #6aa2ce);
+  box-shadow: none;
+}
+
+button[disabled]:active, button[disabled],
+input[type="button"][disabled]:active,
+input[type="button"][disabled],
+input[type="submit"][disabled]:active,
+input[type="submit"][disabled] ,
+button[disabled]:hover,
+input[type="button"][disabled]:hover,
+input[type="submit"][disabled]:hover
+{
+  color: GrayText;
+  text-shadow: none;
+  cursor: inherit;
+  background-color: #ddd;
+  background: #ddd;
+}
+
+html,body {
+    margin:0;
+    padding:0;
+}
+
+body {
+    font: 76% arial,sans-serif;
+    text-align: center;
+}
+
+p {
+    margin:0 10px 10px;
+}
+
+a {
+    display: block;
+    color: #981793;
+    padding: 10px;
+}
+
+div#header h1 {
+    height: 50px;
+    line-height: 50px;
+    margin: 0;
+    padding-left: 10px;
+    background: #EEE;
+    color: #79B30B;
+}
+
+
+div#container {
+    text-align: left
+}
+div#container {
+    width: 700px;
+    margin: 0 auto;
+}
+
+div#content {
+    float: right;
+    width: 500px;
+}
+div#content p {
+    line-height:1.4;
+}
+
+div#navigation {
+    float: left;
+    width: 200px;
+}
+div#navigation {
+    <!--background:#B9CAFF;-->
+}
+
+div#extra {
+    <!--background:#FF8539;-->
+    float: left;
+    <!--clear: left;-->
+    width: 200px;
+}
+
+div#footer {
+    background: #333;
+    color: #FFF;
+    clear: both;
+    width: 100%;
+}
+div#footer p {
+    margin: 0;
+    padding:5px 10px;
+}
