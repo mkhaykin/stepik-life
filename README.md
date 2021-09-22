@@ -1,5 +1,3 @@
 # stepik-life
 
-flask
-flask-restful
-? flask_wtf
+https://stepik.org/course/97540
