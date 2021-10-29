@@ -30,7 +30,6 @@ function get_json(url, callback, json=null, callback_onerror=null) {
             callback_onerror(xhr.status);
         }
     }
-
     xhr.send(JSON.stringify(json));
 }
 
@@ -87,6 +86,7 @@ function SetApply() {
     let size_h = document.getElementById('size_h').value;
     let size_w = document.getElementById('size_w').value;
     resize(size_h, size_w);
+    SetBack(); // close settings
 }
 
 function resize(height, width) {
