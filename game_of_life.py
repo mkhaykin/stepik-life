@@ -18,9 +18,27 @@ class GameOfLife(metaclass=SingletonMeta):
     def __init__(self, width=25, height=25):
         self.__width = width
         self.__height = height
+
+        # current step
         self._counter = 0
+
+        # current world
         self._world = []
+
+        # self._world_change - last change in world:
+        # -1    dead
+        # 0     no change cell
+        # +1    new
+        self._world_change = []
+
+        # TODO: search cycle in generation
+        # self._world_history - last 10 world`s generate:
+        # need for search cycle
+        self._world_history = [10]
+
+        # previous world
         self._world_prev = []
+
         self.generate_universe(width=width, height=height)
 
     @property
