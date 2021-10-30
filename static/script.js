@@ -1,6 +1,7 @@
 // flag for load data from /status
 var flgWaitForStatus = false;   // flag for concurrent render
 var flgWaitForNext = false;     // flag for concurrent next generation
+var flgWaitForNew = false;      // flag for concurrent world generation
 
 var timerId;                    // timer for auto update
 // for settings
@@ -17,7 +18,7 @@ function init() {
     render_main();                  // draw table
 }
 
-function get_json(url, callback, json=null, callback_onerror=null) {
+function get_json(url, json=null, callback=null, callback_onerror=null) {
     // url              - url for request
     // callback         - function on load
     // json             - json to post on url
@@ -26,8 +27,10 @@ function get_json(url, callback, json=null, callback_onerror=null) {
     xhr.open(json !== null ? 'POST' : 'GET', url, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.responseType = 'json';
-    xhr.onload = function () {
-        callback(xhr.status, xhr.response);
+    if (callback) {
+        xhr.onload = function () {
+            callback(xhr.status, xhr.response);
+        }
     }
     if (callback_onerror) {
         xhr.onerror = function() {
@@ -37,27 +40,51 @@ function get_json(url, callback, json=null, callback_onerror=null) {
     xhr.send(JSON.stringify(json));
 }
 
+function setStatusOK() {
+    document.getElementById('status').innerHTML = 'ok';
+}
+
+function setStatusError() {
+    document.getElementById('status').innerHTML = 'error connect to server. try later.';
+}
+
 function New() {
-    const json = {
-        "height": tableHeight,
-        "width": tableWidth
+    if (!flgWaitForNew) {
+        flgWaitForNew = true;
+        const json = {
+            "height": tableHeight,
+            "width": tableWidth
+        }
+        get_json('/new', json, new_onload, new_onerror);
     }
-    get_json('/new', new_onload, json);
 }
 
 function new_onload(status, json) {
     render_main();
+    setStatusOK();
+    flgWaitForNew = false;
+}
+
+function new_onerror(status) {
+    setStatusError();
+    flgWaitForNew = false;
 }
 
 function Next(){
     if (!flgWaitForNext) {
         flgWaitForNext = true;
-        get_json('/nextstep', next_onload);
+        get_json('/nextstep', null, next_onload, next_onerror);
     }
 }
 
 function next_onload(status, json) {
     render_main();
+    setStatusOK();
+    flgWaitForNext = false;
+}
+
+function next_onerror(status) {
+    setStatusError();
     flgWaitForNext = false;
 }
 
@@ -98,11 +125,7 @@ function resize(height, width) {
         "height": height,
         "width": width
     }
-    get_json('/new', new_onload, json);
-}
-
-function new_onload(status, json) {
-    render_main();
+    get_json('/new', json, new_onload);
 }
 
 function SetBack() {
@@ -110,6 +133,7 @@ function SetBack() {
 }
 
 function TableDrop() {
+    // TODO как то быстро очищать таблицу, а не удалять построчно
     var table = document.getElementById('life_table');
     var l = table.rows.length-1;
     for (var i=0; i <= l; i++) {
@@ -169,36 +193,37 @@ function TableDrawWorld(table, col, row, world){
 }
 
 function TableDraw(col, row, step, world, world_change, world_prev){
-    // исправить: всегда перерисовываем (((
     var table = document.getElementById('life_table');
-    document.getElementById('step_count').innerHTML = step
+    document.getElementById('step_count').innerHTML = step;
 
-    // TableClear();
-    // TODO: плохо. надо менять, а не перерисовывать каждый раз. Контроль размеров.
-    // draw table
-    TableDrawBlank(col, row);
-
-    // Draw change
-    TableDrawChange(table, col, row, world, world_change)
-    // Пауза в течение 3 секунд
+    // Отрисовываем ожидаемые изменения
+    TableDrawChange(table, col, row, world, world_change);
+    // Пауза в течение 3 секунд. И рисуем мир.
     setTimeout(() => TableDrawWorld(table, col, row, world), timeoutWordChange);
-
-    // await new Promise(r => setTimeout(r, 3000));
-
-    // Draw result
 }
 
 function render_main() {
     if (!flgWaitForStatus) {
         flgWaitForStatus = true;
-        get_json('/status', render_main_onload);
+        get_json('/status', null, render_main_onload, render_main_onerror);
     }
 }
 
 function render_main_onload(status, json) {
     const data = JSON.parse(json);
     tableHeight = data.height;
-    tableWidth = data.width
+    tableWidth = data.width;
+    TableDrawBlank(data.width, data.height);
     TableDraw(data.width, data.height, data.step, data.world, data.world_change, data.world_prev);
+    setStatusOK();
+    flgWaitForStatus = false;
+}
+
+function render_main_onerror(status) {
+    tableHeight = -1;
+    tableWidth = -1;
+
+    TableDrop();
+    setStatusError();
     flgWaitForStatus = false;
 }
