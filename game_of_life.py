@@ -50,6 +50,10 @@ class GameOfLife(metaclass=SingletonMeta):
         return self._world
 
     @property
+    def world_change(self):
+        return self._world_change
+
+    @property
     def world_prev(self):
         return self._world_prev
 
@@ -68,6 +72,7 @@ class GameOfLife(metaclass=SingletonMeta):
         new_world = [[0 for _ in range(self.__width)] for _ in range(self.__height)]
         universe = self._world
 
+        # not my code. check.
         for i in range(len(universe)):
             for j in range(len(universe[0])):
                 if universe[i][j]:
@@ -81,7 +86,15 @@ class GameOfLife(metaclass=SingletonMeta):
                     new_world[i][j] = 1
                     continue
                 new_world[i][j] = 0
+
+        # build world change
+        # TODO: bad code. only test.
+        self._world_change = [[new_world[i][j] - self._world[i][j]
+                               for j in range(self.__width)]
+                              for i in range(self.__height)]
+
         self._world = new_world
+
 
     # def resize(self, width=20, height=20):
     #     self.__width = width
@@ -94,8 +107,9 @@ class GameOfLife(metaclass=SingletonMeta):
         self.__width = width
         self.__height = height
         self._counter = 0
-        self._world_prev = [[0 for _ in range(self.__width)] for _ in range(self.__height)]
         self._world = [[random.randint(0, 1) for _ in range(self.__width)] for _ in range(self.__height)]
+        self._world_change = [[0 for _ in range(self.__width)] for _ in range(self.__height)]
+        self._world_prev = [[0 for _ in range(self.__width)] for _ in range(self.__height)]
 
     @staticmethod
     def __get_near(universe, pos, system=None):

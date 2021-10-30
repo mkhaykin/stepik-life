@@ -25,6 +25,7 @@ def status():
         'width': game.width,
         'step': game.counter,
         'world': game.world,
+        'world_change': game.world_change,
         'world_prev': game.world_prev
     }
     json_data = json.dumps(data)

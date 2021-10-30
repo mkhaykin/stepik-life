@@ -1,16 +1,23 @@
 .cell {
     padding: 5px;
-    background: whitesmoke;
     width: 5px;
     height: 5px;
 }
 
+.blank-cell {
+    background: whitesmoke;
+}
+
 .living-cell {
-    background: lightgreen;
+    background: LimeGreen;
+}
+
+.new-cell {
+    background: PaleGreen;
 }
 
 .dead-cell {
-    background: #A6ACAF;
+    background: Silver;
 }
 
 #world {
