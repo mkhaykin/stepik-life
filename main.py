@@ -1,4 +1,4 @@
-from os import urandom
+from os import urandom, environ
 from flask import Flask
 from flask import render_template
 from flask import request, jsonify
@@ -8,6 +8,8 @@ import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = urandom(32)
+# heroku port
+port = int(environ.get("PORT", 5000))
 
 game = GameOfLife()
 
@@ -68,4 +70,4 @@ def new():
 
 if __name__ == '__main__':
     # app.run(debug=True)
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=port, debug=False)
